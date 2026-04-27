@@ -1,241 +1,69 @@
-import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
 import { useModal } from '../hooks/ModalContext';
 
-interface HeroProps {}
-
-
-const avatars = [
-  '/images/herodo/member1.webp',
-  '/images/herodo/member2.webp',
-  '/images/herodo/member3.webp',
-];
-
-function AvatarStack() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  return (
-    <div style={{ display: 'flex' }}>
-      {avatars.map((src, i) => {
-        const isHovered = hoveredIndex === i;
-        const isBlurred = hoveredIndex !== null && hoveredIndex !== i;
-
-        return (
-          <div
-            key={i}
-            onMouseEnter={() => setHoveredIndex(i)}
-            onMouseLeave={() => setHoveredIndex(null)}
-            style={{
-              position: 'relative',
-              width: '34px',
-              height: '34px',
-              marginLeft: i === 0 ? 0 : '-9px',
-              zIndex: isHovered ? 10 : avatars.length - i,
-              transition: 'transform 0.25s ease, z-index 0s',
-              transform: isHovered ? 'scale(1.5)' : 'scale(1)',
-              cursor: 'pointer',
-              flexShrink: 0,
-            }}
-          >
-            <img
-              src={src}
-              alt={`Member ${i + 1}`}
-              style={{
-                width: '34px',
-                height: '34px',
-                borderRadius: '50%',
-                border: '2px solid #CC2020',
-                objectFit: 'cover',
-                display: 'block',
-                filter: isBlurred ? 'blur(2px)' : 'none',
-                transition: 'filter 0.25s ease',
-              }}
-            />
-            {/* 50% dark overlay when blurred */}
-            {isBlurred && (
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  borderRadius: '50%',
-                  backgroundColor: 'rgba(0,0,0,0.5)',
-                  transition: 'opacity 0.25s ease',
-                }}
-              />
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-export default function Hero(_props: HeroProps) {
+export default function Hero() {
   const { openModal } = useModal();
-  const badgeRef = useRef<HTMLDivElement>(null);
-  const headlineRef = useRef<HTMLDivElement>(null);
-  const rightColRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-    tl.fromTo(
-        badgeRef.current,
-        { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 0.6 },
-        0.1
-      )
-      .fromTo(
-        headlineRef.current,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.85 },
-        0.25
-      )
-      .fromTo(
-        rightColRef.current,
-        { opacity: 0, x: 36 },
-        { opacity: 1, x: 0, duration: 0.75 },
-        0.4
-      );
-  }, []);
 
   return (
-    <section
-      id="home"
-      style={{
-        width: '100%',
-        backgroundColor: '#FFFFFF',
-        display: 'flex',
-        flexDirection: 'column',
-        boxSizing: 'border-box',
-      }}
-      className="hero-section"
-    >
-      {/* Image container — rounded, fills padded area */}
-      <div
-        style={{
-          position: 'relative',
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-        className="hero-container"
-      >
-        {/* Background Image — LCP element */}
-        <picture>
-          <img
-            src="/images/1.webp"
-            alt="BJJ Training at Luiz Paulo West Bridgewater academy"
-            fetchPriority="high"
-            loading="eager"
-            decoding="sync"
-            className="hero-bg-img"
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              zIndex: 0,
-            }}
-          />
-        </picture>
-
-        {/* Overlay — desktop: fade bottom-up / mobile: fade top-down */}
-        <div className="hero-overlay" style={{ position: 'absolute', inset: 0, zIndex: 1 }} />
-
-
-        {/* ── BOTTOM CONTENT ── */}
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 10,
-            marginTop: 'auto',
-            padding: '0 48px 52px',
-            display: 'flex',
-            alignItems: 'flex-end',
-            justifyContent: 'space-between',
-            gap: '48px',
-            flexWrap: 'wrap',
-          }}
-        >
-          {/* LEFT — Badge + Headline */}
-          <div style={{ flex: '1', minWidth: '280px' }}>
-            {/* Social Proof Badge */}
-            <div
-              ref={badgeRef}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '12px',
-                opacity: 0,
-              }}
-            >
-              <AvatarStack />
-              <span
-                style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontWeight: 400,
-                  fontSize: '14px',
-                  color: 'rgba(255,255,255,0.88)',
-                  letterSpacing: '0.02em',
-                }}
-              >
-                300+ Active Members
-              </span>
-            </div>
-
-            {/* Headline */}
-            <div ref={headlineRef} style={{ opacity: 0 }}>
-              <h1
-                style={{
-                  fontFamily: 'Kurdis, sans-serif',
-                  fontWeight: 600,
-                  fontSize: 'clamp(40px, 6vw, 112px)',
-                  lineHeight: 0.95,
-                  letterSpacing: '-2px',
-                  color: '#FFFFFF',
-                  margin: 0,
-                  textTransform: 'uppercase',
-                }}
-              >
-                Grit,
-                <br />
-                Discipline,
-                <br />
-                and Black Belts.
-              </h1>
-            </div>
-          </div>
-
-          {/* RIGHT — Subtext + Buttons */}
-          <div
-            ref={rightColRef}
-            style={{
-              flex: '0 0 auto',
-              maxWidth: '360px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '24px',
-              opacity: 0,
-            }}
-          >
+    <>
+      <section id="home" className="hero-section" style={{ backgroundColor: '#FFFFFF', overflow: 'hidden' }}>
+        <div className="hero-grid">
+          {/* Left — text */}
+          <div className="hero-left">
             <p
+              data-hero-animate=""
               style={{
                 fontFamily: 'Inter, sans-serif',
-                fontWeight: 400,
-                fontSize: '16px',
-                lineHeight: 1.7,
-                color: '#FFFFFF',
-                margin: 0,
+                fontSize: '11px',
+                fontWeight: 600,
+                letterSpacing: '0.22em',
+                textTransform: 'uppercase',
+                color: 'var(--color-text-muted)',
+                marginBottom: '16px',
+                animationDelay: '0.1s',
               }}
             >
-              Experience jiu-jitsu like never before — real self-defense, discipline, and a community that feels like family.
+              // West Bridgewater, MA
             </p>
 
-            <div style={{ display: 'flex', gap: '12px', flexWrap: 'nowrap' }}>
-              {/* Primary — Red */}
+            <h1
+              data-hero-animate=""
+              style={{
+                fontFamily: 'Kurdis, sans-serif',
+                fontWeight: 700,
+                fontSize: 'clamp(3rem, 5.2vw, 6rem)',
+                lineHeight: 0.95,
+                letterSpacing: '-0.03em',
+                textTransform: 'uppercase',
+                color: '#1A1A1A',
+                margin: '0 0 24px',
+                animationDelay: '0.2s',
+              }}
+            >
+              Jiu-Jitsu<br />
+              in West<br />
+              Bridgewater
+            </h1>
+
+            <p
+              data-hero-animate=""
+              style={{
+                fontFamily: 'Inter, sans-serif',
+                fontSize: '16px',
+                lineHeight: 1.65,
+                color: 'var(--color-text-secondary)',
+                margin: '0 0 32px',
+                maxWidth: '380px',
+                animationDelay: '0.3s',
+              }}
+            >
+              No experience needed. For all ages and levels — from kids to adults.
+            </p>
+
+            {/* CTA buttons */}
+            <div
+              data-hero-animate=""
+              style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '40px', animationDelay: '0.4s' }}
+            >
               <button
                 onClick={openModal}
                 style={{
@@ -244,21 +72,17 @@ export default function Hero(_props: HeroProps) {
                   fontSize: '13px',
                   letterSpacing: '0.07em',
                   color: '#FFFFFF',
-                  backgroundColor: '#CC2020',
-                  padding: '13px 24px',
+                  backgroundColor: 'var(--color-accent)',
+                  padding: '14px 28px',
                   borderRadius: '40px',
-                  textDecoration: 'none',
                   border: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
                   cursor: 'pointer',
                   transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                   whiteSpace: 'nowrap',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'scale(1.04)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(204,32,32,0.45)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(204,32,32,0.4)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'scale(1)';
@@ -267,17 +91,15 @@ export default function Hero(_props: HeroProps) {
               >
                 CLAIM YOUR FREE TRIAL ↗
               </button>
-
-              {/* Secondary — Ghost */}
               <a
                 href="#classes"
                 style={{
                   fontFamily: 'Inter, sans-serif',
                   fontWeight: 400,
                   fontSize: '14px',
-                  color: '#FFFFFF',
-                  border: '1px solid rgba(255,255,255,0.55)',
-                  padding: '13px 24px',
+                  color: '#1A1A1A',
+                  border: '1px solid rgba(0,0,0,0.2)',
+                  padding: '14px 24px',
                   borderRadius: '40px',
                   textDecoration: 'none',
                   display: 'inline-flex',
@@ -286,86 +108,169 @@ export default function Hero(_props: HeroProps) {
                   whiteSpace: 'nowrap',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)';
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.85)';
+                  e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.04)';
+                  e.currentTarget.style.borderColor = 'rgba(0,0,0,0.4)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.55)';
+                  e.currentTarget.style.borderColor = 'rgba(0,0,0,0.2)';
                 }}
               >
                 Learn more
               </a>
             </div>
+
+            {/* Inline stats */}
+            <div
+              data-hero-animate=""
+              style={{ display: 'flex', gap: '0', alignItems: 'center', animationDelay: '0.5s' }}
+            >
+              {[
+                { value: '300+', label: 'Students' },
+                { value: '10+', label: 'Years' },
+                { value: '5.0★', label: 'Google' },
+              ].map((s, i) => (
+                <div key={s.label} style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ textAlign: 'center', padding: i === 0 ? '0 20px 0 0' : '0 20px' }}>
+                    <div style={{
+                      fontFamily: 'Kurdis, sans-serif',
+                      fontWeight: 800,
+                      fontSize: '22px',
+                      color: 'var(--color-accent)',
+                      lineHeight: 1,
+                    }}>
+                      {s.value}
+                    </div>
+                    <div style={{
+                      fontFamily: 'Inter, sans-serif',
+                      fontSize: '11px',
+                      fontWeight: 500,
+                      letterSpacing: '0.06em',
+                      textTransform: 'uppercase',
+                      color: 'var(--color-text-muted)',
+                      marginTop: '3px',
+                    }}>
+                      {s.label}
+                    </div>
+                  </div>
+                  {i < 2 && (
+                    <div style={{ width: '1px', height: '32px', backgroundColor: 'rgba(0,0,0,0.12)' }} />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — image */}
+          <div className="hero-right">
+            <div className="hero-img-wrapper">
+              <img
+                src="/images/1.webp"
+                alt="BJJ Training at Luiz Paulo West Bridgewater"
+                fetchPriority="high"
+                loading="eager"
+                decoding="sync"
+                className="hero-img"
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
       <style>{`
-        /* Overlay — desktop: fade bottom-up */
-        /* Posição da imagem — desktop padrão */
-        .hero-bg-img { object-position: center 75%; }
-        .hero-overlay {
-          background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.10) 100%);
+        @keyframes hero-fade-up {
+          from { opacity: 0; transform: translateY(22px); }
+          to   { opacity: 1; transform: translateY(0);    }
         }
-        /* Notebook: Y ajustado */
-        @media (min-width: 768px) and (max-width: 1439px) {
-          .hero-bg-img { object-position: center 90%; }
+        [data-hero-animate] {
+          opacity: 0;
+          animation: hero-fade-up 0.7s ease forwards;
         }
-        /* Desktop & notebook: altura fixa para consistência */
-        @media (min-width: 768px) {
-          .hero-section {
-            height: 100vh;
-            min-height: 560px;
-          }
-          .hero-container {
-            flex: 1;
-            min-height: 0;
-          }
+        .hero-section {
+          height: 100vh;
         }
-        /* Mobile */
+        @supports (height: 100svh) {
+          .hero-section { height: 100svh; }
+        }
+        .hero-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 48px;
+          align-items: stretch;
+          height: 100%;
+          padding: 0 40px;
+          max-width: 1440px;
+          margin: 0 auto;
+          box-sizing: border-box;
+        }
+        .hero-left {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding-top: 88px;
+          padding-bottom: 40px;
+        }
+        .hero-right {
+          display: flex;
+          align-items: stretch;
+          padding-bottom: 80px;
+          box-sizing: border-box;
+        }
+        .hero-img-wrapper {
+          flex: 1;
+          border-radius: 0 0 20px 20px;
+          overflow: hidden;
+        }
+        .hero-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center 30%;
+          display: block;
+        }
         @media (max-width: 767px) {
-          .hero-container {
-            min-height: 100svh;
+          .hero-section {
+            height: 100svh;
+            position: relative;
+            background-color: #0A0A0A !important;
           }
-          /* Zoom + shift real para descer o conteúdo da imagem */
-          .hero-bg-img {
-            transform: scale(1.25) translateY(8%);
-            transform-origin: center center;
+          .hero-grid {
+            grid-template-columns: 1fr;
+            padding: 0;
+            gap: 0;
+            height: 100%;
           }
-          /* Fade top → bottom no mobile */
-          .hero-overlay {
-            background: linear-gradient(to bottom, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.30) 60%, rgba(0,0,0,0.50) 100%) !important;
+          .hero-right {
+            display: none;
           }
-          /* Conteúdo no TOPO, centralizado */
-          section#home > div > div:last-child {
-            margin-top: 0 !important;
-            padding: 100px 24px 32px !important;
-            flex-direction: column !important;
-            align-items: center !important;
-            text-align: center !important;
-            gap: 16px !important;
+          .hero-left {
+            position: relative;
+            z-index: 2;
+            padding: 100px 24px 40px;
+            justify-content: flex-start;
           }
-          /* Badge centralizado */
-          section#home > div > div:last-child > div:first-child {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+          .hero-left p:first-child { color: rgba(255,255,255,0.5) !important; }
+          .hero-left h1 { color: #FFFFFF !important; }
+          .hero-left p:nth-child(3) { color: rgba(255,255,255,0.8) !important; }
+          .hero-left a { color: #FFFFFF !important; border-color: rgba(255,255,255,0.35) !important; }
+          .hero-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('/images/1.webp');
+            background-size: cover;
+            background-position: center 30%;
+            z-index: 0;
           }
-          /* Col direita full width */
-          section#home > div > div:last-child > div:last-child {
-            max-width: 100% !important;
-            align-items: center !important;
+          .hero-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
           }
-          /* Botões na mesma linha, centralizados */
-          section#home > div > div:last-child > div:last-child > div {
-            justify-content: center !important;
-          }
-        }
-        @media (max-width: 900px) {
-          .nav-desktop { display: none !important; }
         }
       `}</style>
-    </section>
+    </>
   );
 }

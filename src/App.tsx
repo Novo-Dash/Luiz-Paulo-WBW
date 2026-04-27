@@ -1,35 +1,55 @@
+import { ModalProvider } from './hooks/ModalContext';
+import { useUTMs } from './hooks/useUTMs';
+import { useScrollDepth } from './hooks/useScrollDepth';
+
+import Header from './components/Header';
 import Hero from './components/Hero';
-import Stats from './components/Stats';
-import Classes from './components/Classes';
+import JiuJitsuForEveryone from './components/JiuJitsuForEveryone';
+import Reviews from './components/Reviews';
 import About from './components/About';
+import Classes from './components/Classes';
+import HowToSchedule from './components/HowToSchedule';
 import Coaches from './components/Coaches';
 import Gallery from './components/Gallery';
-import Reviews from './components/Reviews';
+import Stats from './components/Stats';
 import FAQ from './components/FAQ';
 import MapSection from './components/MapSection';
 import Footer from './components/Footer';
-
-import { ModalProvider } from './hooks/ModalContext';
 import BookingModal from './components/BookingModal';
+import StickyCTABar from './components/StickyCTABar';
 
-function App() {
+function AppInner() {
+  useUTMs();
+  useScrollDepth();
+
   return (
-    <ModalProvider>
-      <main>
+    <>
+      <a href="#main" className="skip-link">Skip to main content</a>
+      <Header />
+      <main id="main">
         <Hero />
-        <Stats />
-        <Classes />
+        <JiuJitsuForEveryone />
+        <Reviews />
         <About />
+        <Classes />
+        <HowToSchedule />
         <Coaches />
         <Gallery />
-        <Reviews />
+        <Stats />
         <FAQ />
         <MapSection />
       </main>
       <Footer />
       <BookingModal />
-    </ModalProvider>
+      <StickyCTABar />
+    </>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <ModalProvider>
+      <AppInner />
+    </ModalProvider>
+  );
+}

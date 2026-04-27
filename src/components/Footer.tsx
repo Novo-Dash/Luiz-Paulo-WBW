@@ -117,8 +117,8 @@ export default function Footer() {
                   margin: 0,
                 }}
               >
-                123 Washington Street<br />
-                Norwood, MA 02062<br />
+                120 W Center St<br />
+                West Bridgewater, MA 02379<br />
                 United States
               </p>
             </div>
@@ -220,21 +220,16 @@ export default function Footer() {
             >
               FIND US
             </h4>
-            <div
-              style={{
-                backgroundColor: 'rgba(0,0,0,0.18)',
-                borderRadius: '12px',
-                height: '140px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'rgba(255,255,255,0.5)',
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '13px',
-                letterSpacing: '0.05em',
-              }}
-            >
-              Google Maps
+            <div style={{ borderRadius: '12px', overflow: 'hidden', height: '160px' }}>
+              <iframe
+                src="https://maps.google.com/maps?q=120+W+Center+St,+West+Bridgewater,+MA+02379&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="160"
+                title="Luiz Paulo BJJ location"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                style={{ border: 0, display: 'block', filter: 'grayscale(20%) invert(90%) hue-rotate(180deg)' }}
+              />
             </div>
           </div>
         </div>
