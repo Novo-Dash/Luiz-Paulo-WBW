@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(cp -r \"D:/DOCUMENTOS/NovoDash/bjj-norwood/.\" \"D:/DOCUMENTOS/NovoDash/Luiz Paulo Norwood/\")",
+      "Bash(rm -rf \"D:/DOCUMENTOS/NovoDash/bjj-norwood\")",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(timeout 15 npm run dev)",
+      "Bash(npm run:*)",
+      "Bash(node -e \"const fm = require\\(''framer-motion''\\); console.log\\(Object.keys\\(fm\\).filter\\(k => k.toLowerCase\\(\\).includes\\(''animation''\\)\\)\\)\")",
+      "Bash(find '/d/DOCUMENTOS/NovoDash/Luiz Paulo Norwood' -maxdepth 2 -name tailwind.config.* -o -name postcss.config.*)",
+      "Bash(grep -r import.*tailwind '/d/DOCUMENTOS/NovoDash/Luiz Paulo Norwood/src')",
+      "Bash(find 'D:\\\\DOCUMENTOS\\\\NovoDash\\\\Luiz Paulo Norwood' -type f \\\\\\(-name *.jsx -o -name *.tsx -o -name *.js -o -name *.ts \\\\\\))",
+      "Bash(grep -E \"\\\\.\\(ts|tsx|js|jsx\\)$\")",
+      "Bash(cd:*)",
+      "Bash(find 'D:\\\\DOCUMENTOS\\\\NovoDash\\\\Luiz Paulo Norwood/src' -type f \\\\\\(-name *.js -o -name *.jsx -o -name *.ts -o -name *.tsx \\\\\\))",
+      "Bash(node -e \"const l = require\\(''./node_modules/lucide-react''\\); const social = Object.keys\\(l\\).filter\\(k => /instagram|facebook|youtube|twitter|tiktok|linkedin/i.test\\(k\\)\\); console.log\\(social\\)\")",
+      "Bash(node -e \"const l = require\\(''./node_modules/lucide-react''\\); console.log\\(Object.keys\\(l\\).filter\\(k => /share|social|link|globe|external/i.test\\(k\\)\\).slice\\(0,20\\)\\)\")",
+      "Bash(cp \"unnamed \\(1\\).png\" \"unnamed-1.png\")",
+      "Bash(cp \"unnamed \\(2\\).png\" \"unnamed-2.png\")",
+      "Bash(cp \"unnamed.png\" \"member1.png\")",
+      "Bash(cp \"unnamed \\(1\\).png\" \"member2.png\")",
+      "Bash(cp \"unnamed \\(2\\).png\" \"member3.png\")",
+      "Bash(node scripts/optimize-images.mjs)"
+    ]
+  }
+}
