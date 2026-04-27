@@ -5,12 +5,12 @@ import { useModal } from '../hooks/ModalContext';
 interface ClassCard {
   title: string[];
   image: string;
+  imagePosition: string;
 }
 
 const cards: ClassCard[] = [
-  { title: ['KIDS', 'JIU-JITSU'], image: '/images/programs/kids.webp' },
-  { title: ['BEGINNERS', 'JIU-JITSU'], image: '/images/programs/beginner.webp' },
-  { title: ['ADULTS', 'JIU-JITSU'], image: '/images/programs/adults.webp' },
+  { title: ['KIDS', 'JIU-JITSU'],   image: '/images/programs/kids.webp',   imagePosition: 'center 20%' },
+  { title: ['ADULTS', 'JIU-JITSU'], image: '/images/programs/adults.webp', imagePosition: 'center 25%' },
 ];
 
 export default function Classes() {
@@ -147,7 +147,7 @@ export default function Classes() {
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
-                      objectPosition: 'center',
+                      objectPosition: card.imagePosition,
                       display: 'block',
                     }}
                   />
