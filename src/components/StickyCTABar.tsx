@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { ArrowUpRight } from 'lucide-react';
 import { useModal } from '../hooks/ModalContext';
 
 export default function StickyCTABar() {
@@ -47,7 +48,7 @@ export default function StickyCTABar() {
             textTransform: 'uppercase',
           }}
         >
-          Book Your Free Trial Class ↗
+          Book Your Free Trial Class <ArrowUpRight size={14} strokeWidth={2.5} style={{ marginLeft: '4px' }} />
         </button>
       </div>
       <style>{`

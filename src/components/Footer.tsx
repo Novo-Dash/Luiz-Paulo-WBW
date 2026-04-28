@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ArrowRight } from 'lucide-react';
 import { useModal } from '../hooks/ModalContext';
 
 function IconInstagram() {
@@ -78,7 +78,7 @@ export default function Footer() {
               e.currentTarget.style.boxShadow = 'none';
             }}
           >
-            FREE TRIAL →
+            FREE TRIAL <ArrowRight size={14} strokeWidth={2} style={{ marginLeft: '4px' }} />
           </button>
         </div>
 

@@ -42,6 +42,7 @@ export default function Coaches() {
           style={{ marginBottom: '56px' }}
         >
           <h2
+            className="coaches-headline"
             style={{
               fontFamily: 'Kurdis, sans-serif',
               fontWeight: 700,
@@ -50,6 +51,7 @@ export default function Coaches() {
               letterSpacing: '-0.02em',
               color: '#1A1A1A',
               margin: 0,
+              whiteSpace: 'nowrap',
             }}
           >
             MEET THE <span style={{ color: '#CC2020' }}>COACHES</span>
@@ -71,6 +73,7 @@ export default function Coaches() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
+            className="coach-photo-wrap"
             style={{
               flex: '0 0 400px',
               alignSelf: 'stretch',
@@ -245,6 +248,12 @@ export default function Coaches() {
           </motion.div>
         </div>
       </div>
+      <style>{`
+        @media (max-width: 767px) {
+          .coaches-headline { font-size: 28px !important; white-space: nowrap; }
+          .coach-photo-wrap { flex: 0 0 100% !important; max-width: 100% !important; height: 320px !important; align-self: auto !important; }
+        }
+      `}</style>
     </section>
   );
 }

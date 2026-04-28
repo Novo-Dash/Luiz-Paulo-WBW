@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ArrowUpRight } from 'lucide-react';
 import { useModal } from '../hooks/ModalContext';
 
 const STEPS = [
@@ -150,7 +151,7 @@ export default function HowToSchedule() {
               e.currentTarget.style.boxShadow = 'none';
             }}
           >
-            Book a Free Class ↗
+            Book a Free Class <ArrowUpRight size={14} strokeWidth={2.5} style={{ marginLeft: '4px' }} />
           </button>
         </div>
 

@@ -212,9 +212,9 @@ export default function Classes() {
                         flexShrink: 0,
                       }}
                     >
-                      <span style={{ color: '#FFFFFF', fontSize: '18px', lineHeight: 1, transform: 'translateY(-1px)', display: 'block' }}>
-                        ↗
-                      </span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                      </svg>
                     </div>
                   </div>
 

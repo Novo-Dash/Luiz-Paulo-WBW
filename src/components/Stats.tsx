@@ -1,5 +1,6 @@
 import { useMemo, useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
+import { Clock, ArrowUpRight } from 'lucide-react';
 import { schedule } from '../data/schedule';
 import { useModal } from '../hooks/ModalContext';
 
@@ -10,12 +11,6 @@ const STATS_DATA = [
   { value: 10,  suffix: '+', label: 'YEARS OF EXCELLENCE' },
   { value: 5.0, suffix: ' ★', label: 'GOOGLE REVIEWS' },
 ];
-
-function getTypeColor(type: string): string {
-  if (type.startsWith('KIDS')) return '#16A34A';
-  if (type.startsWith('ADULT')) return '#2563EB';
-  return '#6B7280';
-}
 
 export default function Stats() {
   const { openModal } = useModal();
@@ -37,91 +32,49 @@ export default function Stats() {
   useEffect(() => {
     const el = statsRef.current;
     if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting || animatedRef.current) return;
-        animatedRef.current = true;
-
-        STATS_DATA.forEach((stat, i) => {
-          const numberEl = document.getElementById(`sched-stat-${i}`);
-          if (!numberEl) return;
-          const isDecimal = stat.value % 1 !== 0;
-          const proxy = { val: 0 };
-          gsap.to(proxy, {
-            val: stat.value,
-            duration: 2,
-            delay: i * 0.15,
-            ease: 'power2.out',
-            onUpdate() {
-              numberEl.textContent = isDecimal
-                ? proxy.val.toFixed(1) + stat.suffix
-                : Math.floor(proxy.val) + stat.suffix;
-            },
-          });
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || animatedRef.current) return;
+      animatedRef.current = true;
+      STATS_DATA.forEach((stat, i) => {
+        const numberEl = document.getElementById(`sched-stat-${i}`);
+        if (!numberEl) return;
+        const isDecimal = stat.value % 1 !== 0;
+        const proxy = { val: 0 };
+        gsap.to(proxy, {
+          val: stat.value,
+          duration: 2,
+          delay: i * 0.15,
+          ease: 'power2.out',
+          onUpdate() {
+            numberEl.textContent = isDecimal
+              ? proxy.val.toFixed(1) + stat.suffix
+              : Math.floor(proxy.val) + stat.suffix;
+          },
         });
-      },
-      { threshold: 0.3 }
-    );
-
+      });
+    }, { threshold: 0.3 });
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
   return (
     <>
-      <section
-        id="schedule"
-        style={{ backgroundColor: '#F7F7F7', padding: '80px 24px' }}
-      >
+      <section id="schedule" style={{ backgroundColor: '#F7F7F7', padding: '80px 24px' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
 
           {/* Header + filter row */}
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '16px',
-              alignItems: 'flex-end',
-              justifyContent: 'space-between',
-              marginBottom: '40px',
-            }}
-          >
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '40px' }}>
             <div>
-              <p style={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '11px',
-                fontWeight: 600,
-                letterSpacing: '0.22em',
-                textTransform: 'uppercase',
-                color: '#999999',
-                marginBottom: '8px',
-                margin: '0 0 8px',
-              }}>
+              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#999999', margin: '0 0 8px' }}>
                 // Schedule
               </p>
-              <h2 style={{
-                fontFamily: 'Kurdis, sans-serif',
-                fontWeight: 700,
-                fontSize: 'clamp(32px, 4vw, 52px)',
-                textTransform: 'uppercase',
-                letterSpacing: '-0.02em',
-                lineHeight: 0.95,
-                color: '#1A1A1A',
-                margin: 0,
-              }}>
+              <h2 style={{ fontFamily: 'Kurdis, sans-serif', fontWeight: 700, fontSize: 'clamp(32px, 4vw, 52px)', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.95, color: '#1A1A1A', margin: 0 }}>
                 CLASS SCHEDULE
               </h2>
             </div>
 
-            {/* Filter pills */}
-            <div style={{
-              display: 'flex',
-              gap: '4px',
-              padding: '4px',
-              backgroundColor: '#E5E5E5',
-              borderRadius: '40px',
-            }}>
+            {/* Filter pills — active = red */}
+            <div style={{ display: 'flex', gap: '4px', padding: '4px', backgroundColor: '#E5E5E5', borderRadius: '40px' }}>
               {(['all', 'adults', 'kids'] as Filter[]).map((f) => (
                 <button
                   key={f}
@@ -136,7 +89,7 @@ export default function Stats() {
                     borderRadius: '40px',
                     border: 'none',
                     cursor: 'pointer',
-                    backgroundColor: filter === f ? '#1A1A1A' : 'transparent',
+                    backgroundColor: filter === f ? 'var(--color-accent)' : 'transparent',
                     color: filter === f ? '#FFFFFF' : '#555555',
                     transition: 'background-color 0.2s ease, color 0.2s ease',
                   }}
@@ -166,9 +119,7 @@ export default function Stats() {
                     borderTop: `${isHovered ? '5px' : '3px'} solid var(--color-accent)`,
                     transition: 'transform 0.3s cubic-bezier(0.34,1.48,0.64,1), box-shadow 0.3s ease, border-top-width 0.15s ease',
                     transform: isHovered ? 'translateY(-10px) scale(1.03)' : 'none',
-                    boxShadow: isHovered
-                      ? '0 16px 40px rgba(0,0,0,0.12)'
-                      : '0 1px 4px rgba(0,0,0,0.06)',
+                    boxShadow: isHovered ? '0 16px 40px rgba(0,0,0,0.12)' : '0 1px 4px rgba(0,0,0,0.06)',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '10px',
@@ -178,57 +129,41 @@ export default function Stats() {
                   }}
                 >
                   {/* Day name */}
-                  <div style={{
-                    fontFamily: 'Kurdis, sans-serif',
-                    fontWeight: 700,
-                    fontSize: '13px',
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: '#1A1A1A',
-                  }}>
+                  <div style={{ fontFamily: 'Kurdis, sans-serif', fontWeight: 700, fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#1A1A1A' }}>
                     {day.day}
                   </div>
 
                   {/* Classes or closed */}
                   {isClosed ? (
-                    <div style={{
-                      fontFamily: 'Inter, sans-serif',
-                      fontSize: '12px',
-                      color: '#999',
-                      fontStyle: 'italic',
-                    }}>
+                    <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', color: '#999', fontStyle: 'italic' }}>
                       Closed
                     </div>
                   ) : (
                     day.classes.map((cls, j) => (
-                      <div key={j} style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                      <div key={j} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        {/* Type — red text label */}
                         <span style={{
-                          display: 'inline-block',
+                          fontFamily: 'Inter, sans-serif',
                           fontSize: '9px',
                           fontWeight: 700,
-                          letterSpacing: '0.1em',
+                          letterSpacing: '0.15em',
                           textTransform: 'uppercase',
-                          color: '#FFFFFF',
-                          backgroundColor: getTypeColor(cls.type),
-                          padding: '2px 7px',
-                          borderRadius: '4px',
-                          width: 'fit-content',
+                          color: 'var(--color-accent)',
                         }}>
                           {cls.type}
                         </span>
-                        <span style={{
-                          fontFamily: 'Inter, sans-serif',
-                          fontSize: '12px',
-                          fontWeight: 600,
-                          color: '#1A1A1A',
-                        }}>
-                          {cls.time}
-                        </span>
+                        {/* Time + clock icon */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                          <Clock size={11} color="#888" strokeWidth={1.5} style={{ flexShrink: 0 }} />
+                          <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', fontWeight: 600, color: '#1A1A1A' }}>
+                            {cls.time}
+                          </span>
+                        </div>
                       </div>
                     ))
                   )}
 
-                  {/* Book button — fades in on hover */}
+                  {/* Book button */}
                   {!isClosed && (
                     <button
                       onClick={openModal}
@@ -249,9 +184,12 @@ export default function Stats() {
                         transform: isHovered ? 'translateY(0)' : 'translateY(6px)',
                         transition: 'opacity 0.25s ease, transform 0.25s ease',
                         pointerEvents: isHovered ? 'auto' : 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
                       }}
                     >
-                      BOOK ↗
+                      BOOK <ArrowUpRight size={11} strokeWidth={2.5} />
                     </button>
                   )}
                 </div>
@@ -260,48 +198,23 @@ export default function Stats() {
           </div>
 
           {/* Count-up stats */}
-          <div
-            ref={statsRef}
-            style={{ marginTop: '80px' }}
-          >
+          <div ref={statsRef} style={{ marginTop: '80px' }}>
             <div className="stats-count-row">
               {STATS_DATA.map((stat, i) => (
                 <div key={stat.label} style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-                  <div
-                    style={{
-                      flex: 1,
-                      textAlign: 'center',
-                      padding: '16px 24px',
-                    }}
-                  >
-                    <div style={{
-                      fontFamily: 'Kurdis, sans-serif',
-                      fontWeight: 800,
-                      fontSize: 'clamp(40px, 5vw, 68px)',
-                      color: 'var(--color-accent)',
-                      lineHeight: 1,
-                      marginBottom: '8px',
-                    }}>
+                  <div style={{ flex: 1, textAlign: 'center', padding: '16px 24px' }}>
+                    <div style={{ fontFamily: 'Kurdis, sans-serif', fontWeight: 800, fontSize: 'clamp(40px, 5vw, 68px)', color: 'var(--color-accent)', lineHeight: 1, marginBottom: '8px' }}>
                       <span id={`sched-stat-${i}`}>
                         {stat.value % 1 !== 0
                           ? stat.value.toFixed(1) + stat.suffix
                           : Math.floor(stat.value) + stat.suffix}
                       </span>
                     </div>
-                    <div style={{
-                      fontFamily: 'Kurdis, sans-serif',
-                      fontWeight: 500,
-                      fontSize: '11px',
-                      letterSpacing: '3px',
-                      textTransform: 'uppercase',
-                      color: '#1A1A1A',
-                    }}>
+                    <div style={{ fontFamily: 'Kurdis, sans-serif', fontWeight: 500, fontSize: '11px', letterSpacing: '3px', textTransform: 'uppercase', color: '#1A1A1A' }}>
                       {stat.label}
                     </div>
                   </div>
-                  {i < STATS_DATA.length - 1 && (
-                    <div className="stat-div-line" />
-                  )}
+                  {i < STATS_DATA.length - 1 && <div className="stat-div-line" />}
                 </div>
               ))}
             </div>
@@ -316,12 +229,8 @@ export default function Stats() {
           grid-template-columns: repeat(7, 1fr);
           gap: 10px;
         }
-        @media (max-width: 1100px) {
-          .schedule-grid { grid-template-columns: repeat(4, 1fr); }
-        }
-        @media (max-width: 640px) {
-          .schedule-grid { grid-template-columns: repeat(2, 1fr); }
-        }
+        @media (max-width: 1100px) { .schedule-grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 640px)  { .schedule-grid { grid-template-columns: repeat(2, 1fr); } }
         .stats-count-row {
           display: flex;
           align-items: center;
@@ -329,12 +238,7 @@ export default function Stats() {
           max-width: 900px;
           margin: 0 auto;
         }
-        .stat-div-line {
-          width: 1px;
-          height: 60px;
-          background-color: rgba(0,0,0,0.12);
-          flex-shrink: 0;
-        }
+        .stat-div-line { width: 1px; height: 60px; background-color: rgba(0,0,0,0.12); flex-shrink: 0; }
         @media (max-width: 600px) {
           .stats-count-row { flex-direction: column; }
           .stats-count-row > div { flex-direction: column; width: 100%; }

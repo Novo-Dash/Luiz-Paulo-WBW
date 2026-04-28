@@ -1,3 +1,4 @@
+import { ArrowUpRight } from 'lucide-react';
 import { useModal } from '../hooks/ModalContext';
 
 export default function JiuJitsuForEveryone() {
@@ -73,7 +74,7 @@ export default function JiuJitsuForEveryone() {
               e.currentTarget.style.boxShadow = 'none';
             }}
           >
-            CLICK FOR A FREE TRIAL CLASS ↗
+            CLICK FOR A FREE TRIAL CLASS <ArrowUpRight size={14} strokeWidth={2.5} style={{ marginLeft: '4px' }} />
           </button>
         </div>
 

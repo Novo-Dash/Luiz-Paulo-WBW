@@ -104,6 +104,7 @@
   .benefits-stack {
     flex-direction: column;
     align-items: stretch;
+    gap: 16px;
   }
   .benefit-card {
     max-width: 100%;

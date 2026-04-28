@@ -1,3 +1,4 @@
+import { ArrowUpRight } from 'lucide-react';
 import { useModal } from '../hooks/ModalContext';
 
 export default function Hero() {
@@ -89,7 +90,7 @@ export default function Hero() {
                   e.currentTarget.style.boxShadow = 'none';
                 }}
               >
-                CLAIM YOUR FREE TRIAL ↗
+                CLAIM YOUR FREE TRIAL <ArrowUpRight size={14} strokeWidth={2.5} style={{ marginLeft: '4px' }} />
               </button>
               <a
                 href="#classes"
@@ -231,44 +232,31 @@ export default function Hero() {
         }
         @media (max-width: 767px) {
           .hero-section {
-            height: 100svh;
-            position: relative;
-            background-color: #0A0A0A !important;
+            height: auto !important;
+            background-color: #FFFFFF !important;
           }
           .hero-grid {
             grid-template-columns: 1fr;
             padding: 0;
             gap: 0;
-            height: 100%;
-          }
-          .hero-right {
-            display: none;
+            height: auto;
           }
           .hero-left {
-            position: relative;
-            z-index: 2;
-            padding: 100px 24px 40px;
+            position: static;
+            z-index: auto;
+            padding: 96px 24px 32px;
             justify-content: flex-start;
           }
-          .hero-left p:first-child { color: rgba(255,255,255,0.5) !important; }
-          .hero-left h1 { color: #FFFFFF !important; }
-          .hero-left p:nth-child(3) { color: rgba(255,255,255,0.8) !important; }
-          .hero-left a { color: #FFFFFF !important; border-color: rgba(255,255,255,0.35) !important; }
-          .hero-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: url('/images/hero.webp');
-            background-size: cover;
-            background-position: center 30%;
-            z-index: 0;
+          .hero-right {
+            display: block;
+            position: relative;
+            height: 300px;
+            margin: 0 16px 48px;
+            padding-bottom: 0;
           }
-          .hero-section::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.7) 100%);
-            z-index: 1;
+          .hero-img-wrapper {
+            bottom: 0;
+            border-radius: 16px;
           }
         }
       `}</style>
