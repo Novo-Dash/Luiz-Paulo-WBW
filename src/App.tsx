@@ -10,7 +10,7 @@ import Classes from './components/Classes';
 import HowToSchedule from './components/HowToSchedule';
 import Coaches from './components/Coaches';
 import Gallery from './components/Gallery';
-import Stats from './components/Stats';
+
 import FAQ from './components/FAQ';
 import MapSection from './components/MapSection';
 import Footer from './components/Footer';
@@ -33,7 +33,7 @@ function AppInner() {
         <HowToSchedule />
         <Coaches />
         <Gallery />
-        <Stats />
+
         <FAQ />
         <MapSection />
       </main>
